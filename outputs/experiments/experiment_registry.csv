@@ -1,0 +1,31 @@
+﻿experiment_id,model_type,run_date,stage,train_script,test_script,best_epoch,best_valid_auc,test_mean_auc,learning_rate,batch_size,num_epochs,notes
+exp_001,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_002,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_003,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_004,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_005,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_006,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_007,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_008,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_009,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_010,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_011,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_012,transformer,2026-03-11 11:21:35,test,src/engine/train.py,src/engine/test.py,20,0.7951595756929436,0.7965665852351526,,32,,auto-logged from transformer test script
+exp_013,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_014,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_015,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_016,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_017,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_018,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_019,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_020,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_021,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_022,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_023,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_024,fusion,2026-03-11 11:21:55,test,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.8120653158546537,0.8026298846203593,,32,,auto-logged from fusion test script
+exp_025,transformer,2026-03-11 11:23:32,train,src/engine/train.py,src/engine/test.py,18,0.7954331555067929,,0.0001,32,20,"round1 transformer training upgrade with scheduler, early stopping, grad clip"
+exp_026,fusion,2026-03-11 11:25:23,train,src/engine/train_fusion.py,src/engine/test_fusion.py,12,0.815173078710789,,0.0001,32,20,"round1 fusion training upgrade with scheduler, early stopping, grad clip"
+exp_027,transformer,2026-03-11 11:56:23,test,src/engine/train.py,src/engine/test.py,18,0.7954331555067929,0.7970407091058962,,32,,auto-logged from transformer test script
+exp_028,morgan_logreg,2026-03-11 12:00:38,test,src/models/train_ml_models.py,src/models/inference/predict_logreg.py,,0.7858353695343193,0.7858353695343193,,,,auto-logged from train_ml_models.py after offline training and evaluation
+exp_029,morgan_rf,2026-03-11 12:00:50,test,src/models/train_ml_models.py,src/models/inference/predict_rf.py,,0.8131403847662115,0.8131403847662115,,,,auto-logged from train_ml_models.py after offline training and evaluation
+exp_030,transformer,2026-03-11 12:02:45,test,src/engine/train.py,src/engine/test.py,18,0.7954331555067929,0.7970407091058962,,32,,auto-logged from transformer test script

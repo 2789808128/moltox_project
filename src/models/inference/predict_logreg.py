@@ -1,88 +1,41 @@
-import os
+import joblib
 import numpy as np
-import pandas as pd
 
 from rdkit import Chem
 from rdkit.Chem import DataStructs
 from rdkit.Chem.rdFingerprintGenerator import GetMorganGenerator
 
-from sklearn.linear_model import LogisticRegression
+from src.models.inference.base_predictor import BasePredictor
 
 
-TASK_NAMES = [
-    "NR-AR",
-    "NR-AR-LBD",
-    "NR-AhR",
-    "NR-Aromatase",
-    "NR-ER",
-    "NR-ER-LBD",
-    "NR-PPAR-gamma",
-    "SR-ARE",
-    "SR-ATAD5",
-    "SR-HSE",
-    "SR-MMP",
-    "SR-p53",
-]
+class LogRegPredictor(BasePredictor):
+    def __init__(self, project_root: str | None = None):
+        super().__init__(project_root=project_root)
 
+        self.model_path = self.project_root / "outputs" / "checkpoints" / "ml_baselines" / "morgan_logreg.joblib"
+        saved = joblib.load(self.model_path)
 
-class LogRegPredictor:
-    def __init__(self, project_root: str):
-        self.project_root = project_root
-        self.train_csv = os.path.join(project_root, "data", "processed", "tox21_train.csv")
-
-        self.fp_radius = 2
-        self.fp_n_bits = 2048
-        self.threshold = 0.5
+        self.models = saved["models"]
+        self.task_names = saved["task_names"]
+        self.fp_radius = saved["fp_radius"]
+        self.fp_n_bits = saved["fp_n_bits"]
+        self.threshold = saved["threshold"]
+        self.model_name = saved["model_name"]
 
         self.morgan_generator = GetMorganGenerator(
             radius=self.fp_radius,
             fpSize=self.fp_n_bits
         )
 
-        self.train_df = pd.read_csv(self.train_csv)
-        self.X_train_all = self._build_feature_matrix(self.train_df)
-
-        # 每个任务一个模型
-        self.models = self._train_models()
-
     def _smiles_to_fp(self, smiles: str):
         mol = Chem.MolFromSmiles(smiles)
         if mol is None:
-            return np.zeros((self.fp_n_bits,), dtype=np.float32)
+            raise ValueError(f"Invalid SMILES: {smiles}")
 
         fp = self.morgan_generator.GetFingerprint(mol)
         arr = np.zeros((self.fp_n_bits,), dtype=np.float32)
         DataStructs.ConvertToNumpyArray(fp, arr)
         return arr
-
-    def _build_feature_matrix(self, df: pd.DataFrame):
-        features = []
-        for smiles in df["smiles"].tolist():
-            features.append(self._smiles_to_fp(smiles))
-        return np.array(features, dtype=np.float32)
-
-    def _train_models(self):
-        models = {}
-
-        for task_name in TASK_NAMES:
-            label_mask = self.train_df[task_name].notna().values
-            X_train = self.X_train_all[label_mask]
-            y_train = self.train_df.loc[label_mask, task_name].astype(int).values
-
-            if len(np.unique(y_train)) < 2:
-                models[task_name] = None
-                continue
-
-            model = LogisticRegression(
-                max_iter=1000,
-                class_weight="balanced",
-                solver="liblinear",
-                random_state=42
-            )
-            model.fit(X_train, y_train)
-            models[task_name] = model
-
-        return models
 
     def predict(self, smiles: str):
         x = self._smiles_to_fp(smiles).reshape(1, -1)
@@ -90,8 +43,8 @@ class LogRegPredictor:
         task_probs = {}
         task_preds = {}
 
-        for task_name in TASK_NAMES:
-            model = self.models[task_name]
+        for task_name in self.task_names:
+            model = self.models.get(task_name)
             if model is None:
                 prob = None
                 pred = None
@@ -102,28 +55,24 @@ class LogRegPredictor:
             task_probs[task_name] = prob
             task_preds[task_name] = pred
 
+        return self.format_result(
+            model_name=self.model_name,
+            smiles=smiles,
+            task_probs=task_probs,
+            task_preds=task_preds,
+        )
+
+    def get_metadata(self):
         return {
-            "model_name": "morgan_logreg",
-            "smiles": smiles,
-            "task_probs": task_probs,
-            "task_preds": task_preds,
+            "model_type": "morgan_logreg",
+            "model_name": self.model_name,
+            "task_names": self.task_names,
+            "threshold": self.threshold,
+            "input_type": "morgan_fingerprint",
         }
 
 
 if __name__ == "__main__":
-    project_root = r"E:\Project\moltox_project"
-
-    predictor = LogRegPredictor(project_root=project_root)
-
-    smiles = "CCO"
-    result = predictor.predict(smiles)
-
-    print("Model:", result["model_name"])
-    print("SMILES:", result["smiles"])
-    print("\nTask probabilities:")
-    for k, v in result["task_probs"].items():
-        print(f"{k}: {v}")
-
-    print("\nTask predictions:")
-    for k, v in result["task_preds"].items():
-        print(f"{k}: {v}")
+    predictor = LogRegPredictor()
+    result = predictor.predict("CCO")
+    print(result)

@@ -2,7 +2,13 @@ import os
 import matplotlib.pyplot as plt
 
 
-def plot_mean_auc_comparison(save_path: str):
+def plot_mean_auc_comparison(
+    save_path: str,
+    transformer_auc: float = 0.7554,
+    logreg_auc: float = 0.7858,
+    rf_auc: float = 0.8131,
+    fusion_auc: float = 0.8026,
+):
     model_names = [
         "Transformer",
         "Morgan+LogReg",
@@ -11,10 +17,10 @@ def plot_mean_auc_comparison(save_path: str):
     ]
 
     mean_aucs = [
-        0.7554,
-        0.7858,
-        0.8131,
-        0.7974
+        transformer_auc,
+        logreg_auc,
+        rf_auc,
+        fusion_auc,
     ]
 
     plt.figure(figsize=(8, 5))
@@ -24,7 +30,6 @@ def plot_mean_auc_comparison(save_path: str):
     plt.title("Tox21 Model Comparison")
     plt.ylim(0.70, 0.85)
 
-    # 在柱子上标数值
     for bar, value in zip(bars, mean_aucs):
         plt.text(
             bar.get_x() + bar.get_width() / 2,
